@@ -15,8 +15,8 @@ const [modalForm, setModalForm] = useState(false)
   const showModalConfirm = () => {setModalConfirm(true) }
   const hideModalConfirm = () => {setModalConfirm(false)}
 
-  const parseResult = async (state, controlResult, hideModalConfirm) => {
-    fetch("https://jsonplaceholder.typicode.com/todos").then(data => data.json()).then(data => controlResult(data[9].completed ? 1:3))
+  const parseResult = async (state, controlResult, hideModalConfirm, loader) => {
+    fetch('https://jsonplaceholder.typicode.com/todos').then(response => response.json()).then(json => controlResult(json[10].completed ? 1:3))
     setTimeout(hideModalConfirm,3000)
   }
 

@@ -1,4 +1,5 @@
 import React, {Comment, useEffect, useMemo, useState} from "react"
+import {AiFillCloseSquare} from "react-icons/ai"
 import { ReactDOM } from "react"
 import {createPortal} from "react-dom"
 import CircularProgress from '@mui/material/CircularProgress';
@@ -9,9 +10,11 @@ export const Overlay = ({children, onClose}) => {
    );
 }
 
-export const Header = ({title}) => {
+export const Header = (props) => {
+  const {title, onClose} = props
+
   return ( 
-    <header className="flex justify-center mt-20 text-3xl w-full text-white">
+    <header className="flex justify-between h-10 text-3xl w-full text-white">
       {title}
     </header>
    );
@@ -31,7 +34,10 @@ export const ModalInfo = (props) => {
     <>
     <Overlay onClose={onClose}>
       <div onClick={(e)=>e.stopPropagation()} className="w-[500px] m-auto  bg-emerald-800">
-        <Header title={title}/>
+        <div className="flex mt-40">
+          <Header title={title}/>
+          <button className="w-10 flex justify-center items-center" onClick={onClose}><AiFillCloseSquare color="white"  className="text-3xl cursor-pointer"/></button>
+        </div>
         <div className="h-96 flex flex-wrap justify-center m-auto  overflow-y-scroll overflow-x-hidden bg-emerald-700">{children}</div>
         </div>
     </Overlay>
@@ -46,18 +52,21 @@ export const ModalConfirm = (props) => {
   const [result, setResult] = useState(0)
 
   const applyHandler = () => {
-    apply(true,control?setResult:()=>alert("Что-то да произошло"))
+    apply(true,control?setResult:2)
   }
 
   return createPortal(
     <>
       <Overlay onClose={cancel}>
         <div onClick={(e)=>e.stopPropagation()} className="w-1/3 m-auto  bg-emerald-800">
-        <Header title={title}/>
+        <div className="flex mt-40">
+          <Header title={title}/>
+          <button className="w-10 flex justify-center items-center" onClick={cancel}><AiFillCloseSquare color="white"  className="text-3xl cursor-pointer"/></button>
+        </div>
         {result === 0 && 
           <div className="h-32 flex justify-center m-auto bg-emerald-700">
             <button className="mr-20 mt-10 bg-red-700 h-10 text-white text-2xl w-40 rounded-sm hover:bg-red-800 transition" onClick={cancel}>Отмена</button>
-            <button className="mt-10 bg-green-500 h-10 text-white text-2xl w-40 rounded-sm hover:bg-green-600 transition" onClick={applyHandler}>Принять</button>
+            <button className="mt-10 bg-green-500 h-10 text-white text-2xl w-40 rounded-sm hover:bg-green-600 transition" onClick={applyHandler}>Подтвердить</button>
           </div>}
         {result === 1 && 
           <div className="flex justify-center flex-col">
@@ -84,7 +93,10 @@ export const ModalForm = (props) => {
     <>
     <Overlay onClose={cancel}>
       <div onClick={(e)=>e.stopPropagation()} className="w-[500px] m-auto  bg-emerald-800">
-        <Header title={title}/>
+      <div className="flex mt-40">
+          <Header title={title}/>
+          <button className="w-10 flex justify-center items-center" onClick={cancel}><AiFillCloseSquare color="white"  className="text-3xl cursor-pointer"/></button>
+        </div>
         <div className="h-96 flex flex-wrap justify-center m-auto  overflow-y-scroll overflow-x-hidden bg-emerald-700">{children}</div>
         </div>
     </Overlay>
